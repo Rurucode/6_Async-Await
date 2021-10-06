@@ -6,9 +6,12 @@ const pokemonRandom = async (name) => {
     try {
         let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}?limit=1118`);
         let data = await response.json();
-        let nombres = await data.results[aleatorio].name;
-        // let pokeFoto = await data.results[aleatorio];
-        return nombres;
+        let nombres =  data.results[aleatorio].name;
+        let url =  data.results[aleatorio].url
+        let foto = await fetch(`${url}`)
+        let convertir = await foto.json()
+        let loconvertido = convertir.sprites.front_default
+        return [nombres, loconvertido];
     }
 
     catch (error) {
@@ -17,19 +20,7 @@ const pokemonRandom = async (name) => {
 }
 
 
-const pokemonFoto = async (name) => {
-    try {
-        let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}?limit=1118`);
-        let data = await response.json();
-        let nombres = await data.results[aleatorio].name;
-        // let pokeFoto = await data.results[aleatorio];
-        return nombres;
-    }
 
-    catch (error) {
-        console.log(`ERROR: ${error.stack}`)
-    }
-}
 
 pokemonRandom("")
     .then(data => console.log(data))
